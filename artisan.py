@@ -63,19 +63,8 @@ def main():
             st.write("No artisans found matching the criteria.")
         else:
             for index, row in artisan_details.iterrows():
-                col1, col2 = st.columns([1, 9])
-                with col1:
-                    st.write(row['Artisan_Name'])
-                with col2:
-                    if st.button(f"View Profile_{index}"):
-                        # Logic to display artisan's profile
-                        st.write("Profile details are not available.")
-                        if st.button("Message"):
-                            # Logic to send message to artisan
-                            st.write("Message sent to artisan.")
-                        if st.button("Call"):
-                            # Logic to call artisan
-                            st.write("Calling artisan...")
+                st.write(row['Artisan_Name'])
+
     else:
         st.write("Please select all criteria to get recommendations.")
 
