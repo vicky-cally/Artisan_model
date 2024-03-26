@@ -13,12 +13,8 @@ def filter_artisans(user_location, desired_skill, availability, scheduling_prefe
     if scheduling_preference == 'On-demand':
         filtered_data = filtered_data[filtered_data['Scheduling_Preference'] == 'On-Demand']
 
-    # Check if filtered_data is empty
-    if filtered_data.empty:
-        return pd.DataFrame(columns=['Artisan_Name'])  # Return empty DataFrame with only Artisan_Name column
-
     # Extract artisan details from the filtered dataset
-    artisan_details = filtered_data[['Artisan_Name']].reset_index(drop=True)
+    artisan_details = filtered_data[['Artisan_Name', 'Skills', 'Location', 'Experience']].reset_index(drop=True)
 
     return artisan_details
 
@@ -69,13 +65,16 @@ def main():
                 with col2:
                     if st.button(f"View Profile_{index}"):
                         # Logic to display artisan's profile
-                        st.write("Profile details are not available.")
+                        st.write(f"**Skills:** {row['Skills']}")
+                        st.write(f"**Location:** {row['Location']}")
+                        st.write(f"**Experience:** {row['Experience']}")
                         if st.button("Message"):
                             # Logic to send message to artisan
                             st.write("Message sent to artisan.")
                         if st.button("Call"):
                             # Logic to call artisan
                             st.write("Calling artisan...")
+
     else:
         st.write("Please select all criteria to get recommendations.")
 
