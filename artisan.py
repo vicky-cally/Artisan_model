@@ -58,12 +58,13 @@ def main():
         if not recommended_artisans:
             st.write("No artisans found matching the criteria.")
         else:
-            for artisan in recommended_artisans:
+            for index, artisan in enumerate(recommended_artisans):
+                button_id = f"Book_{index}"  # Unique button ID for each artisan
                 col1, col2 = st.columns([1, 9])
                 with col1:
                     st.write(artisan)
                 with col2:
-                    if st.button("Book_" + artisan):
+                    if st.button(button_id):
                         # Logic to book the selected artisan
                         st.write("Booking confirmed for " + artisan)
     else:
