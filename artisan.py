@@ -13,10 +13,10 @@ def filter_artisans(user_location, desired_skill, availability, scheduling_prefe
     if scheduling_preference == 'On-demand':
         filtered_data = filtered_data[filtered_data['Scheduling_Preference'] == 'On-Demand']
 
-    # Extract artisan names from the filtered dataset
-    recommended_artisans = filtered_data['Artisan_Name'].tolist()
+    # Extract artisan details from the filtered dataset
+    artisan_details = filtered_data[['Artisan_Name', 'Profile', 'Phone_Number']].reset_index(drop=True)
 
-    return recommended_artisans
+    return artisan_details
 
 # Main function to run the Streamlit app
 def main():
@@ -51,22 +51,28 @@ def main():
         df = pd.read_csv("Main_Artisan_data.csv")  # Replace "Main_Artisan_data.csv" with your dataset filename
 
         # Filter artisans based on user input
-        recommended_artisans = filter_artisans(user_location, desired_skill, availability, scheduling_preference, artisan_location, df)
+        artisan_details = filter_artisans(user_location, desired_skill, availability, scheduling_preference, artisan_location, df)
 
         # Display recommended artisans
         st.subheader("Recommended Artisans")
-        if not recommended_artisans:
+        if artisan_details.empty:
             st.write("No artisans found matching the criteria.")
         else:
-            for index, artisan in enumerate(recommended_artisans):
-                button_id = f"Book_{index}"  # Unique button ID for each artisan
+            for index, row in artisan_details.iterrows():
                 col1, col2 = st.columns([1, 9])
                 with col1:
-                    st.write(artisan)
+                    st.write(row['Artisan_Name'])
                 with col2:
-                    if st.button(button_id):
-                        # Logic to book the selected artisan
-                        st.write("Booking confirmed for " + artisan)
+                    if st.button(f"View Profile_{index}"):
+                        # Logic to display artisan's profile
+                        st.write(f"**Profile:** {row['Profile']}")
+                        st.write(f"**Phone Number:** {row['Phone_Number']}")
+                        if st.button("Message"):
+                            # Logic to send message to artisan
+                            st.write("Message sent to artisan.")
+                        if st.button("Call"):
+                            # Logic to call artisan
+                            st.write("Calling artisan...")
     else:
         st.write("Please select all criteria to get recommendations.")
 
