@@ -66,7 +66,7 @@ def main():
                 st.write(row['Artisan_Name'])
 
     else:
-        st.write("Please select all criteria to get recommendations.")
+        st.write("Please select all criteria to get recommendations.") 
 
 # Run the Streamlit app
 if __name__ == "__main__":
